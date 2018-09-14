@@ -1,3 +1,5 @@
+
+
 declare module "djs-router" {
 
     export class RouterData {
@@ -26,8 +28,8 @@ declare module "djs-router" {
     }
 
     type stopFunction = (data: RouterData, next: Function) => void;
-    type validStopFunction = stopFunction | { toStop: stopFunction };
-    type validKey = string | RegExp;
+    export type validStopFunction = stopFunction | { toStop: stopFunction };
+    export type validKey = string | RegExp;
 
     export class Router {
         constructor();
@@ -56,5 +58,24 @@ declare module "djs-router" {
     }
 
     export function client(client: any): Router;
+
+}
+
+declare module "djs-router/cmd" {
+
+    import { validStopFunction, validKey } from "djs-router";
+
+    export class CommandSet extends Map {
+        toStops(): [validKey, Function][];
+        addCmd(key: validKey, fnc: validStopFunction, i: {}): never;
+        addCmd(arr: [validKey, validStopFunction, {}][]): never;
+    }
+
+    export class Command {
+        constructor(key: validKey, fnc: validStopFunction, i: {});
+        key: validKey;
+        fnc: validStopFunction;
+        i: {};
+    }
 
 }

@@ -1,6 +1,6 @@
 const RouterData = require('./Data.js');
 const Stop = require('./Stop.js');
-const C = require('demos-console');
+//const C = require('demos-console');
 const Sym = require('./Symbol.js');
 
 class RouteMap extends Map {
@@ -197,7 +197,7 @@ class RouteMap extends Map {
                     return true;
                 }
             }
-        } catch (e) { C.logError(e) }; // just in case you know
+        } catch (e) { console.error(e) }; // just in case you know
         return false; // if havent already returned, either theres an error or theres none left, return false for both
     }
 

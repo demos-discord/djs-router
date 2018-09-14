@@ -47,7 +47,9 @@ let events = [
     ['warn', ['info']]
 ]
 
-let Main = function(client) {
+let Main = {};
+
+Main.client = function(client) {
     let r = new Router();
 
     for (let e of events) {

@@ -115,6 +115,12 @@ declare module "djs-router" {
 
     export function client(client: any): Router;
 
+    interface SymbolMetadataObj {
+        [key: string]: Symbol
+    }
+
+    export const Symbol: SymbolMetadataObj;
+
 }
 
 declare module "djs-router/cmd" {

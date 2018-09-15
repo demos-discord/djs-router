@@ -118,7 +118,8 @@ declare module "djs-router/cmd" {
     export class CommandSet extends Map {
         toStops(): [validKey, Function][];
         addCmd(key: validKey, fnc: validStopFunction, i: {}): never;
-        addCmd(arr: [validKey, validStopFunction, {}][]): never;
+        addCmds(arr: [validKey, validStopFunction, {}][]): never;
+        addCmd(key: Command): never;
     }
 
     export class Command {

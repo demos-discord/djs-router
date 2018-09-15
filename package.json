@@ -1,6 +1,6 @@
 {
   "name": "djs-router",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "src/Main.js",
   "scripts": {

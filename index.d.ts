@@ -4,11 +4,13 @@ declare module "djs-router" {
 
     import * as Discord from 'discord.js';
 
+    type ValidChannel = Discord.TextChannel | Discord.DMChannel | Discord.GroupDMChannel;
+
     export class RouterData {
         constructor();
-        channel: Discord.Channel;
-        oldChannel: Discord.Channel;
-        newChannel: Discord.Channel;
+        channel: ValidChannel;
+        oldChannel: ValidChannel;
+        newChannel: ValidChannel;
 
         clientUserGuildSettings: Discord.ClientUserGuildSettings;
         clientUserSettings: Discord.ClientUserSettings;
@@ -25,7 +27,7 @@ declare module "djs-router" {
         oldGuild: Discord.Guild;
         newGuild: Discord.Guild;
 
-        user: Discord.User | Discord.UserResolvable;
+        user: Discord.UserResolvable | Discord.User;
         oldUser: Discord.User;
         newUser: Discord.User;
 

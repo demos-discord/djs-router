@@ -77,11 +77,17 @@ declare module "djs-router" {
         bubble?: boolean,
     }
 
+    export interface ToStopInterface {
+        toStop: () => validStopFunction;
+    }
+    export interface ToStopsInterface {
+        toStops: () => [validKey, validStopFunction][];
+    }
     type stopFunction = (data: RouterData, next: Function) => void;
-    export type validStopFunction = stopFunction | { toStop: stopFunction };
+    export type validStopFunction = stopFunction | ToStopInterface;
     export type validKey = string | RegExp;
 
-    export class Router {
+    export class Router implements ToStopInterface {
         constructor();
         deletable(bool: boolean): never;
         continue(bool: ContInterface): never;
@@ -94,17 +100,17 @@ declare module "djs-router" {
         getStop(args: [validStopFunction]): RouteStop;
         stop(key: validKey, value: validStopFunction): never;
         stop(key: validStopFunction): never;
-        stops(ss_: [validKey, validStopFunction][] | [validStopFunction][]): never;
+        stops(ss_: [validKey, validStopFunction][] | [validStopFunction][] | ToStopsInterface): never;
         start(key: validKey, value: validStopFunction): never;
         start(key: validStopFunction): never;
-        starts(ss_: [validKey, validStopFunction][] | [validStopFunction][]): never;
+        starts(ss_: [validKey, validStopFunction][] | [validStopFunction][] | ToStopsInterface): never;
 
         route(key: string, data_: RouterData): Promise<boolean>;
         route(key: string): Promise<boolean>;
 
-        keyer(keyfnc: Function): never;
+        keyer(keyfnc: (data: RouterData) => any): never;
         anyStops(): boolean;
-        toStop(): Function;
+        toStop(): validStopFunction;
     }
 
     export function client(client: any): Router;
@@ -113,12 +119,15 @@ declare module "djs-router" {
 
 declare module "djs-router/cmd" {
 
-    import { validStopFunction, validKey } from "djs-router";
+    import { validStopFunction, validKey, ToStopInterface, ToStopsInterface } from "djs-router";
+    type validCommandInfo = {
+        [key: string]: any
+    }
 
-    export class CommandSet extends Map {
-        toStops(): [validKey, Function][];
-        addCmd(key: validKey, fnc: validStopFunction, i: {}): never;
-        addCmds(arr: [validKey, validStopFunction, {}][]): never;
+    export class CommandSet extends Map implements ToStopsInterface {
+        toStops(): [validKey, validStopFunction][];
+        addCmd(key: validKey, fnc: validStopFunction, i?: validCommandInfo): never;
+        addCmds(arr: [validKey, validStopFunction, validCommandInfo?][]): never;
         addCmd(key: Command): never;
     }
 
